@@ -35,5 +35,13 @@ namespace LoteryLogic
             var transactionReceipt =
                 await transferHandler.SendRequestAndWaitForReceiptAsync(_contractAddress, transfer);
         }
+
+        public async Task<string[]> GetTicketMap()
+        {
+            var tickets = new GetTicketMapFunction();
+            var dataHandler = _web3.Eth.GetContractQueryHandler<GetTicketMapFunction>();
+            var data = await dataHandler.QueryAsync<string[]>(_contractAddress, tickets);
+            return data;
+        }
     }
 }
