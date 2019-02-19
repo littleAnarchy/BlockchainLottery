@@ -32,8 +32,6 @@ namespace LoteryTest
 
             //test
             var controller = new SmartContractController(contractAddress, web3);
-            var data = await controller.GetData();
-            var tickets = await controller.GetTicketMap();
 
             Console.ReadLine();
         }

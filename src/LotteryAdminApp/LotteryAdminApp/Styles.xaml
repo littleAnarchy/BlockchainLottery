@@ -21,9 +21,11 @@
 
     </ResourceDictionary.MergedDictionaries>
 
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
     <Color x:Key="AccentColor4">#33D80073</Color>
 
-    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}"/>
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}"/>
 
     <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}">
         <Setter Property="TextElement.Foreground" Value="{DynamicResource MaterialDesignBody}"/>
@@ -40,6 +42,8 @@
 
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
         <Setter Property="Foreground" Value="AliceBlue"/>
+        <Setter Property="Width" Value="300"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
     </Style>
 
     <Style x:Key="BorderedTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignOutlinedTextFieldTextBox}">
@@ -51,10 +55,13 @@
         <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="Margin" Value="0,0,0,0"/>
         <Setter Property="Padding" Value="0,0,0,0"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
     </Style>
 
     <Style TargetType="{x:Type Border}">
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Padding" Value="0"/>
     </Style>
+
+    <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource MaterialDesignCardGroupBox}"/>
 </ResourceDictionary>

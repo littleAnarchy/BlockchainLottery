@@ -8,9 +8,8 @@ using Nethereum.Contracts;
 
 namespace LoteryLogic.ContractFunctions
 {
-    [Function("data", "uint256")]
-    public class GetFunction : FunctionMessage
+    [Function("endLotery")]
+    public class EndLoteryFunction : FunctionMessage
     {
-        
     }
 }

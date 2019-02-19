@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="LotteryAdminApp.UserControls.DeployerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewmodels="clr-namespace:LotteryAdminApp.ViewModels"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+    <UserControl.DataContext>
+        <viewmodels:DeployerViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Name="DeployerInfoPanel" Margin="10">
+                <GroupBox Header="Contract Properties">
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Ethereum node url:"/>
+                        <TextBox Text="{Binding NodeUrl}"/>
+                        <TextBox Style="{StaticResource BorderedTextBox}"
+                                 Margin="10, 10, 40, 10"
+                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding ContractCode, 
+                                    UpdateSourceTrigger=PropertyChanged}" 
+                                 materialDesign:HintAssist.Hint="Contract byte code:"/>
+                        <Label Content="Ethereum private key:" Height="Auto"/>
+                        <TextBox Text="{Binding PrivateKey, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                </GroupBox>
+            </Grid>
+            <Grid Grid.Column="1" Margin="10">
+                <GroupBox Header="Contract Info">
+                    <StackPanel Orientation="Vertical" Width="440">
+                        <Label Content="Contract address:"/>
+                        <TextBlock>           
+                            <Hyperlink NavigateUri="{Binding ContractUrl, NotifyOnSourceUpdated=True}" 
+                                       RequestNavigate="Hyperlink_RequestNavigate">
+                                <Label Content="{Binding ContractAddress}"/>
+                            </Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
+                </GroupBox>
+            </Grid>
+        </Grid>
+        <StackPanel Grid.Row="1">
+            <ProgressBar IsIndeterminate="{Binding IsBusy}" Visibility="{Binding ProgressBarVisibility}" HorizontalAlignment="Center" Width="200" Height="10"/>
+            <Button Margin="10" Content="Deploy" HorizontalAlignment="Center" Command="{Binding DeployCommand}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

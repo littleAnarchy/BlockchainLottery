@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+<link rel="stylesheet" type="text/css" href="main.css">
+<script charset="utf-8"
+        src="https://cdn.ethers.io/scripts/ethers-v4.min.js"
+        type="text/javascript">
+</script>
+</head>
+<body>
+<div class="container">
+        <h1>Lotery</h1>
+        <div class="infoBlock">
+                <h2 style="text-align:left;float:left;">Time to end: </h2>
+                <h2 style="text-align:right;float:right;margin: '10,0,0,0'" id="TimeToEnd"></h2>
+        </div>
+        <br/>
+        <div class="infoBlock">
+                <h2 style="text-align:left;float:left;">Prize: </h2>
+                <h2 style="text-align:right;float:right;margin: '10,0,0,0'" id="Prize"></h2>
+                <br/>
+                <h2 style="text-align:left;float:left;">TokenPrice: </h2>
+                <h2 style="text-align:right;float:right;margin: '10,0,0,0'" id="TokenPrice"></h2>
+        </div>
+        <div>
+                <label for="privateKey" class="col-lg-2 control-label">Private Key:</label>
+                        <input id="privateKey" type="text">
+                <label for="amount" class="col-lg-2 control-label">Amount:</label>
+                        <input id="amount" type="text">
+                <button id="button">Buy tickets</button>
+        </div>
+        <div id="txs">
+
+        </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script>
+let provider = ethers.getDefaultProvider('ropsten');
+
+let abi = [
+    "function getTimeToEnd() public view returns(uint time)",
+    "function prize() public view returns (uint prize)",
+    "function tokenPrice() public view returns (uint tokenPrice)",
+    "function buyToken() public payable"
+];
+
+let contractAddress = "0x5115C917927611CAa834FC4D7489FBe731125f27";
+let contract = new ethers.Contract(contractAddress, abi, provider);
+
+setInterval(async () => {UpdateView()}, 3000);
+
+async function UpdateView(){
+        $("#Prize").text(Number.parseInt(await contract.prize()));
+        $("#TokenPrice").text(Number.parseInt(await contract.tokenPrice()));
+        await UpdateTimeToEnd();
+}
+
+async function UpdateTimeToEnd(){
+    let timeToEnd = await contract.getTimeToEnd();
+    let timestamp = Number.parseInt(timeToEnd);
+    let hours = (timestamp - (timestamp % 3600)) / 3600;
+    let minutes = ((timestamp % 3600) - ((timestamp % 3600) % 60)) / 60;
+    let seconds = timestamp % 60;
+
+    console.log(timestamp);
+
+    $("#TimeToEnd").text(`${hours}:${minutes}:${seconds}`);
+}
+
+$("#button").click(async function() {
+            let privateKey = '5DEA0C6695F461A17A076C76131CE4EC530F714490AF1F050E7CCF4BD12B274C';
+            let wallet = new ethers.Wallet(privateKey, provider);
+            let contractWithSigner = contract.connect(wallet);
+            let ovverides = {
+                value: ethers.utils.parseUnits($("#amount").val(), 'wei')
+            }
+            let tx = await contractWithSigner.buyToken(ovverides);
+            console.log(tx);
+
+            $("#txs").append(`<a href="https://ropsten.etherscan.io/tx/${tx.hash}">${tx.hash}</a>`)
+        });
+</script>
+</body>
+</html>

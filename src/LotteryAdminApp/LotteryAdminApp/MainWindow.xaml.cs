@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Navigation;
 using LotteryAdminApp.ViewModels;
+using Xceed.Wpf.AvalonDock.Layout;
 
 namespace LotteryAdminApp
 {
@@ -15,17 +17,12 @@ namespace LotteryAdminApp
 
         public MainWindow()
         {
+
             InitializeComponent();
             _viewModel = new AdminAppViewModel();
             DataContext = _viewModel;
-            Background = Brushes.DimGray;
+            Background = new SolidColorBrush(Color.FromRgb(18, 37, 81));
             WindowTitleBrush = Brushes.SlateBlue;
-        }
-
-        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-        {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
-            e.Handled = true;
         }
     }
 }

@@ -87,10 +87,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContractFunctions\BuyTicketFunction.cs" />
-    <Compile Include="ContractFunctions\GetFunction.cs" />
-    <Compile Include="ContractFunctions\GetTicketMapFunction.cs" />
-    <Compile Include="ContractFunctions\SetFunction.cs" />
+    <Compile Include="ContractFunctions\BuyTokenFunction.cs" />
+    <Compile Include="ContractFunctions\EndLoteryFunction.cs" />
+    <Compile Include="ContractFunctions\GetCommisionBankFunction.cs" />
+    <Compile Include="ContractFunctions\GetCommisionFunction.cs" />
+    <Compile Include="ContractFunctions\GetLoteryEndFunction.cs" />
+    <Compile Include="ContractFunctions\GetPrizeValueFunction.cs" />
+    <Compile Include="ContractFunctions\GetTimeToEndFunction.cs" />
+    <Compile Include="ContractFunctions\GetTokenCountFunction.cs" />
+    <Compile Include="ContractFunctions\GetTokenFunction.cs" />
+    <Compile Include="ContractFunctions\GetTokenPriceFunction.cs" />
+    <Compile Include="ContractFunctions\GetWinnedTokenNumFunction.cs" />
+    <Compile Include="ContractFunctions\GetWinnerFunction.cs" />
+    <Compile Include="Models\ContractParametersModel.cs" />
+    <Compile Include="Models\TransactionParamentrsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SmartContractController.cs" />
     <Compile Include="SmartContractDeployer.cs" />

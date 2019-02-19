@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="LotteryAdminApp.UserControls.ContractInteractionControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewmodels="clr-namespace:LotteryAdminApp.ViewModels"
+             mc:Ignorable="d">
+    <UserControl.DataContext>
+        <viewmodels:ContractInteractionViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <WrapPanel Grid.Row="0" Orientation="Vertical">
+            <Label Content="Contract address:"/>
+            <WrapPanel>
+                <TextBox Text="{Binding InnerContractAddress}"/>
+                <Button Content="Load Contract" Margin="10,0,0,0"
+                        Command="{Binding LoadContractCommand}"/>
+                <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+                             Value="35" Margin="10,0,0,0"
+                             IsIndeterminate="{Binding IsContractLoading}"
+                             Visibility="{Binding IsContractLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            </WrapPanel>
+        </WrapPanel>
+        <GroupBox Grid.Row="1" Margin="20" 
+                  Header="ContractInfo" Visibility="{Binding ContractInfoVisibility}"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <WrapPanel Orientation="Vertical">
+                <WrapPanel>
+                    <Label Content="Contract address: "/>
+                    <Label Content="{Binding ContractAddress}"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="Current prize value: "/>
+                    <Label Content="{Binding PrizeValue}"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="Buyed tokens count: "/>
+                    <Label Content="{Binding TokenCount}"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="Token price: "/>
+                    <Label Content="{Binding TokenPrice}"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="Commision for 1 token: "/>
+                    <Label Content="{Binding Commision}"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="Commision bank: "/>
+                    <Label Content="{Binding CommisionBank}"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="Lotery end data: "/>
+                    <Label Content="{Binding LoteryEnd}"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="Time to end: "/>
+                    <Label Content="{Binding TimeToEnd}"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="Winner: "/>
+                    <Label Content="{Binding Winner}"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="Winned token number: "/>
+                    <Label Content="{Binding WinnedTokenNum}"/>
+                </WrapPanel>
+            </WrapPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>

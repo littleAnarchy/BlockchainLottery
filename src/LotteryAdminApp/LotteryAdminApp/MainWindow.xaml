@@ -4,41 +4,38 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewmodels="clr-namespace:LotteryAdminApp.ViewModels"
-    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-    mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        GlowBrush="Black">
+    xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+    xmlns:usercontrols="clr-namespace:LotteryAdminApp.UserControls"
+    xmlns:viewModels="clr-namespace:LotteryAdminApp.ViewModels"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    mc:Ignorable="d" Title="MainWindow"  GlowBrush="Black"
+    SizeToContent="Manual" ResizeMode="CanResize">
     <Window.DataContext>
-        <viewmodels:AdminAppViewModel/>
+        <viewModels:AdminAppViewModel/>
     </Window.DataContext>
-    <xctk:BusyIndicator IsBusy="{Binding IsBusy}" Background="DarkSlateGray">
-        <Grid Margin="20">
+    <materialDesign:DialogHost Identifier="LoginDialog" CloseOnClickAway="True">
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <WrapPanel Grid.Row="0" Orientation="Vertical">
-                <Label Content="Ethereum node url:"/>
-                <TextBox Text="{Binding NodeUrl}"/>
-                <Label Content="Contract byte code:"/>
-                <TextBox Style="{StaticResource BorderedTextBox}"
-                         VerticalContentAlignment="Top"
-                         Width="400" Height="100" Text="{Binding ContractCode, 
-                     UpdateSourceTrigger=PropertyChanged}"/>
-                <Label Content="Ethereum private key:"/>
-                <TextBox Text="{Binding PrivateKey, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Content="Deploy" Command="{Binding DeployCommand}"/>
-            </WrapPanel>
-            <WrapPanel Grid.Row="1" Orientation="Vertical">
-                <Label Content="Contract address:"/>
-                <TextBlock>           
-                    <Hyperlink NavigateUri="{Binding ContractUrl, NotifyOnSourceUpdated=True}" 
-                               RequestNavigate="Hyperlink_RequestNavigate">
-                        <Label Content="{Binding ContractAddress}"/>
-                    </Hyperlink>
-                </TextBlock>
-            </WrapPanel>
+            <Grid Grid.Row="0">
+                <WrapPanel HorizontalAlignment="Right">
+                    <Button Margin="5" Content="Login" Command="{Binding RunLoginDialogCommand}"/>
+                </WrapPanel>
+            </Grid>
+            <dragablz:TabablzControl Grid.Row="0" ItemContainerStyle="{StaticResource TabItemStyle}"
+                                     Margin="5,0,5,5" Background="Transparent"
+                                     EmptyHeaderSizingHint="Collapse">
+                <dragablz:TabablzControl.InterTabController>
+                    <dragablz:InterTabController/>
+                </dragablz:TabablzControl.InterTabController>
+                <TabItem Name="DeployerTabItem" Header="Deployer">
+                    <usercontrols:DeployerControl x:Name="DeployerControl" Margin="20"/>
+                </TabItem>
+                <TabItem Header="Contract Interaction">
+                    <usercontrols:ContractInteractionControl Margin="20"/>
+                </TabItem>
+            </dragablz:TabablzControl>
         </Grid>
-    </xctk:BusyIndicator>
+    </materialDesign:DialogHost>
 </mah:MetroWindow>
