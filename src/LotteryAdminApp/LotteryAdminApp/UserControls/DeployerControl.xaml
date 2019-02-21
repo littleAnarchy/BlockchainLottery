@@ -9,48 +9,71 @@
     <UserControl.DataContext>
         <viewmodels:DeployerViewModel/>
     </UserControl.DataContext>
-    <Grid>
+    <Grid SnapsToDevicePixels="True" UseLayoutRounding="True">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Name="DeployerInfoPanel" Margin="10">
+            <Grid Name="DeployerInfoPanel">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.7*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                </Grid.ColumnDefinitions>
                 <GroupBox Header="Contract Properties">
-                    <StackPanel Orientation="Vertical">
-                        <Label Content="Ethereum node url:"/>
-                        <TextBox Text="{Binding NodeUrl}"/>
-                        <TextBox Style="{StaticResource BorderedTextBox}"
-                                 Margin="10, 10, 40, 10"
-                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding ContractCode, 
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBox Grid.Row="0" Style="{StaticResource BorderedTextBox}" 
+                                     Margin="10, 10, 40, 10" MaxHeight="300"
+                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding ContractCode, 
                                     UpdateSourceTrigger=PropertyChanged}" 
-                                 materialDesign:HintAssist.Hint="Contract byte code:"/>
-                        <Label Content="Ethereum private key:" Height="Auto"/>
-                        <TextBox Text="{Binding PrivateKey, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
+                                     materialDesign:HintAssist.Hint="Contract byte code:"/>
+                            <Grid Grid.Row="1">
+                                <WrapPanel Orientation="Horizontal">
+                                    <WrapPanel Orientation="Vertical">
+                                        <TextBox Text="{Binding TokenPrice}" 
+                                                 materialDesign:HintAssist.Hint="Token price" Margin="10"/>
+                                        <TextBox Text="{Binding Commision}" 
+                                                 materialDesign:HintAssist.Hint="Commision" Margin="10"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Margin="5,0,0,0" Content="Lotery end:" VerticalAlignment="Center"/>
+                                            <DatePicker materialDesign:HintAssist.Hint="Lotery end date" 
+                                                        Width="150" Margin="10" Foreground="AliceBlue" SelectedDate="{Binding LoteryEndDate}"/>
+                                            <materialDesign:TimePicker materialDesign:HintAssist.Hint="Lotery end time" 
+                                                                       SelectedTime="{Binding LoteryEndTime}"
+                                                                       Width="150" Margin="10"/>
+                                        </StackPanel>
+                                    </WrapPanel>
+                                    <WrapPanel Orientation="Vertical">
+                                        <TextBox materialDesign:HintAssist.Hint="Gas price" Margin="10"/>
+                                        <TextBox materialDesign:HintAssist.Hint="Gas" Margin="10"/>
+                                        <TextBox materialDesign:HintAssist.Hint="Amount value" Margin="10"/>
+                                    </WrapPanel>
+                                </WrapPanel>
+                            </Grid>
+                            <StackPanel Grid.Row="2" HorizontalAlignment="Right">
+                                <Button Margin="10" Content="Deploy" 
+                                        HorizontalAlignment="Center" Command="{Binding DeployCommand}"/>
+                            </StackPanel>
+                            <ProgressBar Grid.Row="3" IsIndeterminate="{Binding IsBusy}" 
+                                         Visibility="{Binding ProgressBarVisibility}"
+                                         HorizontalAlignment="Center" Width="200" Height="10"/>
+                        </Grid>
+                    </ScrollViewer>
                 </GroupBox>
-            </Grid>
-            <Grid Grid.Column="1" Margin="10">
-                <GroupBox Header="Contract Info">
-                    <StackPanel Orientation="Vertical" Width="440">
-                        <Label Content="Contract address:"/>
-                        <TextBlock>           
-                            <Hyperlink NavigateUri="{Binding ContractUrl, NotifyOnSourceUpdated=True}" 
-                                       RequestNavigate="Hyperlink_RequestNavigate">
-                                <Label Content="{Binding ContractAddress}"/>
-                            </Hyperlink>
-                        </TextBlock>
-                    </StackPanel>
+                <GridSplitter Grid.Column="0" Width="5" VerticalAlignment="Stretch"/>
+                <GroupBox Margin="10,0,0,0" Grid.Column="1" Header="Console">
+                    <ScrollViewer>
+                        <StackPanel Name="NotificationConsole"/>
+                    </ScrollViewer>
                 </GroupBox>
             </Grid>
         </Grid>
-        <StackPanel Grid.Row="1">
-            <ProgressBar IsIndeterminate="{Binding IsBusy}" Visibility="{Binding ProgressBarVisibility}" HorizontalAlignment="Center" Width="200" Height="10"/>
-            <Button Margin="10" Content="Deploy" HorizontalAlignment="Center" Command="{Binding DeployCommand}"/>
-        </StackPanel>
     </Grid>
 </UserControl>

@@ -1,10 +1,13 @@
-﻿using System.Windows;
+﻿using System;
+using System.Numerics;
+using System.Windows;
 using LoteryLogic;
-using Nethereum.Web3;
-using Nethereum.Web3.Accounts;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System.Windows.Input;
+using LoteryLogic.Models;
+using LotteryAdminApp.Common;
+using LotteryAdminApp.Controllers;
 
 namespace LotteryAdminApp.ViewModels
 {
@@ -39,8 +42,11 @@ namespace LotteryAdminApp.ViewModels
 
         [Reactive] public string ContractAddress { get; set; } = "Not deployed";
 
-        [Reactive]
-        public string ContractUrl { get; set; } = "";
+        [Reactive] public string ContractUrl { get; set; } = "";
+        [Reactive] public DateTime LoteryEndDate { get; set; } = DateTime.Now;
+        [Reactive] public DateTime LoteryEndTime { get; set; } = DateTime.Now;
+        [Reactive] public string TokenPrice { get; set; }
+        [Reactive] public string Commision { get; set; }
 
         public Visibility ProgressBarVisibility
         {
@@ -61,23 +67,53 @@ namespace LotteryAdminApp.ViewModels
 
         private bool IsContractDeployable(object parametr)
         {
-            return !(string.IsNullOrEmpty(ContractCode) ||
-                     string.IsNullOrEmpty(NodeUrl) ||
-                     string.IsNullOrEmpty(PrivateKey));
+            return !string.IsNullOrEmpty(ContractCode) && LoginController.IsLogin;
         }
 
         private async void DeployContract(object parametr)
         {
-            IsBusy = true;
+            try
+            {
+                IsBusy = true;
 
-            var account = new Account(PrivateKey);
-            var web3 = new Web3(account, NodeUrl);
+                var model = FormContractParametersModel();
 
-            var deployer = new SmartContractDeployer(web3);
-            ContractAddress = await deployer.Deploy(ContractCode);
-            ContractUrl = "https://ropsten.etherscan.io/address/" + ContractAddress;
+                NotificationConsoleController.GetInstance().AppendAllertMessage("Contract deploying...");
 
-            IsBusy = false;
+                var deployer = new SmartContractDeployer(LoginController.Web3);
+                ContractAddress = await deployer.Deploy(ContractCode, model);
+                ContractUrl = "https://ropsten.etherscan.io/address/" + ContractAddress;
+
+                NotificationConsoleController.GetInstance().AppendAllertMessage("Contract deployed sucсessfully!");
+                NotificationConsoleController.GetInstance().AppendUrlMessage(new CustomUrlMessage
+                {
+                    MessageText = "Contract address: ",
+                    AdditionalMessageText = ContractAddress,
+                    AdditionalMessageUrl = ContractUrl
+                });
+
+                ModuleInteractionController.RaiseContractDeployed(ContractAddress);
+
+                IsBusy = false;
+            }
+            catch (Exception e)
+            {
+                IsBusy = false;
+                NotificationConsoleController.GetInstance().AppendErrorMessage(e.Message);
+            }
         }
+
+        private ContractParametersModel FormContractParametersModel()
+        {
+            var endDateTime = new DateTimeOffset(LoteryEndDate.Date + LoteryEndTime.TimeOfDay).ToUnixTimeSeconds();
+            return new ContractParametersModel
+            {
+                Comission = BigInteger.Parse(Commision),
+                TokenPrice = BigInteger.Parse(TokenPrice),
+                LoteryEnd = endDateTime
+            };
+        }
+
+
     }
 }

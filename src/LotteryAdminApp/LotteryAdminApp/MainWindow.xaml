@@ -17,10 +17,17 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <WrapPanel HorizontalAlignment="Right">
-                    <Button Margin="5" Content="Login" Command="{Binding RunLoginDialogCommand}"/>
+                    <materialDesign:Badged Name="LoginBadge" BadgeBackground="Yellow" BadgePlacementMode="BottomRight"
+                                           Margin="10" Padding="-5" >
+                        <materialDesign:Badged.Badge>
+                            <materialDesign:PackIcon Kind="AlertDecagram"/>
+                        </materialDesign:Badged.Badge>
+                        <Button Content="Login" Command="{Binding RunLoginDialogCommand}"/>
+                    </materialDesign:Badged>
                 </WrapPanel>
             </Grid>
             <dragablz:TabablzControl Grid.Row="0" ItemContainerStyle="{StaticResource TabItemStyle}"
@@ -36,6 +43,19 @@
                     <usercontrols:ContractInteractionControl Margin="20"/>
                 </TabItem>
             </dragablz:TabablzControl>
+            <Grid Grid.Row="1" Background="{StaticResource PrimaryHueDarkBrush}">
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="5">
+                    <Label Content="Admin Address:"/>
+                    <TextBlock>           
+                        <Hyperlink NavigateUri="{Binding AddressUrl, NotifyOnSourceUpdated=True}" 
+                                   RequestNavigate="Hyperlink_RequestNavigate">
+                            <Label Content="{Binding LoginAddress}" Foreground="{Binding IsNotLogin, Converter={StaticResource BoolToColorConverter}}"/>
+                        </Hyperlink>
+                    </TextBlock>
+                    <Label Content="Balance:"/>
+                    <Label Content="{Binding Balance}" Foreground="{Binding IsNotLogin, Converter={StaticResource BoolToColorConverter}}"/>
+                </StackPanel>
+            </Grid>
         </Grid>
     </materialDesign:DialogHost>
 </mah:MetroWindow>

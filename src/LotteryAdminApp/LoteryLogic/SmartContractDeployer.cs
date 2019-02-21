@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Numerics;
+using System.Threading.Tasks;
 using LoteryLogic.Models;
 using Nethereum.Web3;
 
@@ -43,18 +44,23 @@ namespace LoteryLogic
             return transactionReceipt.ContractAddress;
         }
 
-        public async Task<string> Deploy(string byteCode, ContractParametersModel contractModel, TransactionParamentrsModel transactionParamentrs)
+        public async Task<string> Deploy(string byteCode, ContractParametersModel contractModel, TransactionParamentrsModel transactionParamenters)
         {
 
-            var deploymentMessage = new StandardLoteryDeployment(byteCode);
+            var deploymentMessage = new StandardLoteryDeployment(byteCode)
+            {
+                Comission = contractModel.Comission,
+                LoteryEnd = contractModel.LoteryEnd,
+                TokenPrice = contractModel.TokenPrice
+            };
 
-            deploymentMessage.Comission = contractModel.Comission;
-            deploymentMessage.LoteryEnd = contractModel.LoteryEnd;
-            deploymentMessage.TokenPrice = contractModel.TokenPrice;
 
-            deploymentMessage.AmountToSend = transactionParamentrs.AmountToSend;
-            deploymentMessage.GasPrice = transactionParamentrs.GasPrice;
-            deploymentMessage.Gas = transactionParamentrs.Gas;
+            if (transactionParamenters.AmountToSend != BigInteger.Zero)
+                deploymentMessage.AmountToSend = transactionParamenters.AmountToSend;
+            if (transactionParamenters.GasPrice != BigInteger.Zero)
+                deploymentMessage.GasPrice = transactionParamenters.GasPrice;
+            if (transactionParamenters.Gas != BigInteger.Zero)
+                deploymentMessage.Gas = transactionParamenters.Gas;
 
             var deploymentHandler = _web3.Eth.GetContractDeploymentHandler<StandardLoteryDeployment>();
 

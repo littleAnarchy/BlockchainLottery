@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using LoteryLogic;
+using LotteryAdminApp.Controllers;
 using Nethereum.Web3;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -49,6 +50,8 @@ namespace LotteryAdminApp.ViewModels
         public ContractInteractionViewModel()
         {
             LoadContractCommand = new CommandHandler(o => true, LoadContract);
+
+            ModuleInteractionController.ContractDeployed += OnContractDeployed;
         }
 
         private async void LoadContract(object parametr)
@@ -65,6 +68,11 @@ namespace LotteryAdminApp.ViewModels
                 MessageBox.Show(e.Message);
                 IsContractLoading = false;
             }
+        }
+
+        private void OnContractDeployed(object sender, EventArgs args)
+        {
+            InnerContractAddress = sender as string;
         }
 
         public async Task UpdateContractInfo()
