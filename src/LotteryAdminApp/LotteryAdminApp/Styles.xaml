@@ -1,7 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
-                    xmlns:converters="clr-namespace:LotteryAdminApp.Converters">
+                    xmlns:converters="clr-namespace:LotteryAdminApp.Converters"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:common="clr-namespace:LotteryAdminApp.Common">
     <ResourceDictionary.MergedDictionaries>
         <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
@@ -24,6 +26,12 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     <converters:BoolToColorConverter x:Key="BoolToColorConverter"/>
+    
+    <ObjectDataProvider x:Key="EthUnits" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="common:EthValue"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
 
     <Color x:Key="AccentColor4">#33D80073</Color>
 
@@ -37,6 +45,10 @@
     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBody1TextBlock}">
         <Setter Property="Margin" Value="0"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
+    </Style>
+    
+    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MaterialDesignComboBox}">
+        <Setter Property="Foreground" Value="AliceBlue"/>
     </Style>
 
     <Style x:Key="TabItemStyle" TargetType="{x:Type dragablz:DragablzItem}" BasedOn="{StaticResource MaterialDesignDragableTabItemStyle}"/>

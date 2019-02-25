@@ -163,6 +163,7 @@
     </ApplicationDefinition>
     <Compile Include="CommandHandler.cs" />
     <Compile Include="Common\CustomUrlMessage.cs" />
+    <Compile Include="Common\EthValue.cs" />
     <Compile Include="Common\NotificationConsoleMessage.cs" />
     <Compile Include="Common\NotificationConsoleMessageType.cs" />
     <Compile Include="Controllers\LoginController.cs" />

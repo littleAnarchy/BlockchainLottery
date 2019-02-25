@@ -51,9 +51,16 @@
                                         </StackPanel>
                                     </WrapPanel>
                                     <WrapPanel Orientation="Vertical">
-                                        <TextBox materialDesign:HintAssist.Hint="Gas price" Margin="10"/>
-                                        <TextBox materialDesign:HintAssist.Hint="Gas" Margin="10"/>
-                                        <TextBox materialDesign:HintAssist.Hint="Amount value" Margin="10"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBox materialDesign:HintAssist.Hint="Gas price" Margin="10"
+                                                     Text="{Binding GasPrice}"/>
+                                            <ComboBox ItemsSource="{Binding Source={StaticResource EthUnits}}"
+                                                      SelectedItem="{Binding GasPriceUnit}"/>
+                                        </StackPanel>
+                                        <TextBox materialDesign:HintAssist.Hint="Gas" Margin="10"
+                                                 Text="{Binding Gas}"/>
+                                        <TextBox materialDesign:HintAssist.Hint="Amount value" Margin="10"
+                                                 Text="{Binding AmountToSend}"/>
                                     </WrapPanel>
                                 </WrapPanel>
                             </Grid>

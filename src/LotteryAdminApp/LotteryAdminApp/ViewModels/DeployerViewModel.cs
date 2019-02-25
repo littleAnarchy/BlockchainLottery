@@ -8,6 +8,7 @@ using System.Windows.Input;
 using LoteryLogic.Models;
 using LotteryAdminApp.Common;
 using LotteryAdminApp.Controllers;
+using Nethereum.Web3;
 
 namespace LotteryAdminApp.ViewModels
 {
@@ -48,6 +49,12 @@ namespace LotteryAdminApp.ViewModels
         [Reactive] public string TokenPrice { get; set; }
         [Reactive] public string Commision { get; set; }
 
+        [Reactive] public string AmountToSend { get; set; }
+        [Reactive] public string Gas { get; set; }
+        [Reactive] public string GasPrice { get; set; }
+        [Reactive] public EthValue GasPriceUnit { get; set; } = EthValue.Gwei;
+        
+
         public Visibility ProgressBarVisibility
         {
             get
@@ -76,12 +83,13 @@ namespace LotteryAdminApp.ViewModels
             {
                 IsBusy = true;
 
-                var model = FormContractParametersModel();
+                var contractParams = FormContractParametersModel();
+                var transactionsParams = FormTransactionParametersModel();
 
                 NotificationConsoleController.GetInstance().AppendAllertMessage("Contract deploying...");
 
                 var deployer = new SmartContractDeployer(LoginController.Web3);
-                ContractAddress = await deployer.Deploy(ContractCode, model);
+                ContractAddress = await deployer.Deploy(ContractCode, contractParams, transactionsParams);
                 ContractUrl = "https://ropsten.etherscan.io/address/" + ContractAddress;
 
                 NotificationConsoleController.GetInstance().AppendAllertMessage("Contract deployed sucсessfully!");
@@ -114,6 +122,14 @@ namespace LotteryAdminApp.ViewModels
             };
         }
 
-
+        private TransactionParamentrsModel FormTransactionParametersModel()
+        {
+            return new TransactionParamentrsModel
+            {
+                AmountToSend = BigInteger.Parse(AmountToSend),
+                Gas =  string.IsNullOrEmpty(Gas) ? (BigInteger?)BigInteger.Parse(Gas) : null,
+                GasPrice = BigInteger.Parse(GasPrice) * (long)GasPriceUnit
+            };
+        }
     }
 }

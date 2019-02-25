@@ -28,7 +28,7 @@ namespace LoteryLogic
                 transfer.GasPrice = model.GasPrice;
                 transfer.Gas = model.Gas;
             }
-
+            
             var transferHandler = _web3.Eth.GetContractTransactionHandler<BuyTokenFunction>();
             return await transferHandler.SendRequestAndWaitForReceiptAsync(_contractAddress, transfer);
         }
