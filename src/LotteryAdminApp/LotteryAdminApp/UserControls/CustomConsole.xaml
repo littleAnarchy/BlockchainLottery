@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="LotteryAdminApp.UserControls.CustomConsole"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LotteryAdminApp.UserControls"
+             mc:Ignorable="d">
+    <Grid>
+        <GroupBox Margin="10,0,0,0" Header="Console">
+            <ScrollViewer>
+                <StackPanel Name="NotificationConsole"/>
+            </ScrollViewer>
+        </GroupBox>
+    </Grid>
+</UserControl>

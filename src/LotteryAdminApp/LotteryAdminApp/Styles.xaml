@@ -40,6 +40,7 @@
     <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}">
         <Setter Property="TextElement.Foreground" Value="{DynamicResource MaterialDesignBody}"/>
         <Setter Property="Background" Value="{DynamicResource MaterialDesignPaper}"/>
+        <Setter Property="Padding" Value="0"></Setter>
     </Style>
 
     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBody1TextBlock}">

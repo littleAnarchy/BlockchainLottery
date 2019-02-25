@@ -50,7 +50,7 @@ namespace LotteryAdminApp.ViewModels
         [Reactive] public string Commision { get; set; }
 
         [Reactive] public string AmountToSend { get; set; }
-        [Reactive] public string Gas { get; set; }
+        [Reactive] public string Gas { get; set; } = "3000000";
         [Reactive] public string GasPrice { get; set; }
         [Reactive] public EthValue GasPriceUnit { get; set; } = EthValue.Gwei;
         

@@ -17,6 +17,8 @@ namespace LotteryAdminApp.ViewModels
 
         [Reactive]
         public ICommand LoadContractCommand { get; set; }
+        [Reactive]
+        public ICommand CloseLoteryCommand { get; set; }
 
         #region Binding fields
 
@@ -50,6 +52,7 @@ namespace LotteryAdminApp.ViewModels
         public ContractInteractionViewModel()
         {
             LoadContractCommand = new CommandHandler(o => true, LoadContract);
+            CloseLoteryCommand = new CommandHandler(o => true, CloseLotery);
 
             ModuleInteractionController.ContractDeployed += OnContractDeployed;
         }
@@ -75,7 +78,7 @@ namespace LotteryAdminApp.ViewModels
             InnerContractAddress = sender as string;
         }
 
-        public async Task UpdateContractInfo()
+        private async Task UpdateContractInfo()
         {
             ContractAddress = InnerContractAddress;
             CommisionBank = await _contractController.GetCommisionBank();
@@ -90,6 +93,11 @@ namespace LotteryAdminApp.ViewModels
 
             ContractInfoVisibility = Visibility.Visible;
             IsContractLoading = false;
+        }
+
+        private async void CloseLotery(object state)
+        {
+            await _contractController.EndLotery(null);
         }
      }
 }

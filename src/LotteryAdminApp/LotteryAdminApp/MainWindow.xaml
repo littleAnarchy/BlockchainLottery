@@ -14,7 +14,7 @@
         <viewModels:AdminAppViewModel/>
     </Window.DataContext>
     <materialDesign:DialogHost Identifier="LoginDialog" CloseOnClickAway="True">
-        <Grid>
+        <Grid SnapsToDevicePixels="True" UseLayoutRounding="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
@@ -22,27 +22,38 @@
             <Grid Grid.Row="0">
                 <WrapPanel HorizontalAlignment="Right">
                     <materialDesign:Badged Name="LoginBadge" BadgeBackground="Yellow" BadgePlacementMode="BottomRight"
-                                           Margin="10" Padding="-5" >
+                                           Margin="0,10,15,0" Padding="-5" >
                         <materialDesign:Badged.Badge>
                             <materialDesign:PackIcon Kind="AlertDecagram"/>
                         </materialDesign:Badged.Badge>
-                        <Button Content="Login" Command="{Binding RunLoginDialogCommand}"/>
+                        <Button Content="Login" 
+                                Command="{Binding RunLoginDialogCommand}"/>
                     </materialDesign:Badged>
                 </WrapPanel>
             </Grid>
-            <dragablz:TabablzControl Grid.Row="0" ItemContainerStyle="{StaticResource TabItemStyle}"
-                                     Margin="5,0,5,5" Background="Transparent"
-                                     EmptyHeaderSizingHint="Collapse">
-                <dragablz:TabablzControl.InterTabController>
-                    <dragablz:InterTabController/>
-                </dragablz:TabablzControl.InterTabController>
-                <TabItem Name="DeployerTabItem" Header="Deployer">
-                    <usercontrols:DeployerControl x:Name="DeployerControl" Margin="20"/>
-                </TabItem>
-                <TabItem Header="Contract Interaction">
-                    <usercontrols:ContractInteractionControl Margin="20"/>
-                </TabItem>
-            </dragablz:TabablzControl>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.7*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                </Grid.ColumnDefinitions>
+                <dragablz:TabablzControl Grid.Column="0" ItemContainerStyle="{StaticResource TabItemStyle}"
+                                         Margin="5,0,5,5" Background="Transparent"
+                                         EmptyHeaderSizingHint="Collapse">
+                    <dragablz:TabablzControl.InterTabController>
+                        <dragablz:InterTabController/>
+                    </dragablz:TabablzControl.InterTabController>
+                    <TabItem Name="DeployerTabItem" Header="Deployer">
+                        <usercontrols:DeployerControl x:Name="DeployerControl" Margin="20"/>
+                    </TabItem>
+                    <TabItem Header="Contract Interaction">
+                        <usercontrols:ContractInteractionControl Margin="20"/>
+                    </TabItem>
+                </dragablz:TabablzControl>
+                <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Left"
+                              VerticalAlignment="Stretch"
+                              Margin="5,100,0,70"/>
+                <usercontrols:CustomConsole Grid.Column="1" Margin="10,62,10,25"/>
+            </Grid>
             <Grid Grid.Row="1" Background="{StaticResource PrimaryHueDarkBrush}">
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="5">
                     <Label Content="Admin Address:"/>

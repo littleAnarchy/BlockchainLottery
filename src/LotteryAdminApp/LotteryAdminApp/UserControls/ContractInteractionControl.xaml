@@ -8,7 +8,7 @@
     <UserControl.DataContext>
         <viewmodels:ContractInteractionViewModel/>
     </UserControl.DataContext>
-    <Grid>
+    <Grid SnapsToDevicePixels="True" UseLayoutRounding="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -27,7 +27,8 @@
         </WrapPanel>
         <GroupBox Grid.Row="1" Margin="20" 
                   Header="ContractInfo" Visibility="{Binding ContractInfoVisibility}"
-                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                  VerticalContentAlignment="Stretch">
             <WrapPanel Orientation="Vertical">
                 <WrapPanel>
                     <Label Content="Contract address: "/>
@@ -68,6 +69,9 @@
                 <WrapPanel>
                     <Label Content="Winned token number: "/>
                     <Label Content="{Binding WinnedTokenNum}"/>
+                </WrapPanel>
+                <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <Button Content="CloseLotery"/>
                 </WrapPanel>
             </WrapPanel>
         </GroupBox>

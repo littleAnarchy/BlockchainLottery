@@ -173,6 +173,9 @@
     <Compile Include="UserControls\ContractInteractionControl.xaml.cs">
       <DependentUpon>ContractInteractionControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\CustomConsole.xaml.cs">
+      <DependentUpon>CustomConsole.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\DeployerControl.xaml.cs">
       <DependentUpon>DeployerControl.xaml</DependentUpon>
     </Compile>
@@ -200,6 +203,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ContractInteractionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\CustomConsole.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

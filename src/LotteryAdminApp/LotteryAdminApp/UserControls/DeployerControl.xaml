@@ -16,10 +16,6 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid Name="DeployerInfoPanel">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.7*"/>
-                    <ColumnDefinition Width="0.3*"/>
-                </Grid.ColumnDefinitions>
                 <GroupBox Header="Contract Properties">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <Grid>
@@ -72,12 +68,6 @@
                                          Visibility="{Binding ProgressBarVisibility}"
                                          HorizontalAlignment="Center" Width="200" Height="10"/>
                         </Grid>
-                    </ScrollViewer>
-                </GroupBox>
-                <GridSplitter Grid.Column="0" Width="5" VerticalAlignment="Stretch"/>
-                <GroupBox Margin="10,0,0,0" Grid.Column="1" Header="Console">
-                    <ScrollViewer>
-                        <StackPanel Name="NotificationConsole"/>
                     </ScrollViewer>
                 </GroupBox>
             </Grid>
